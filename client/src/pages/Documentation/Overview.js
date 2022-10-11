@@ -17,7 +17,7 @@ export default function Overview() {
                 maintained by a community of developers.
               </p>
 
-              <a href="/register" className="text-white">
+              <a href="/register" className="text-white" target="_blank">
                 <Button
                   color="lightBlue"
                   buttonType="filled"
