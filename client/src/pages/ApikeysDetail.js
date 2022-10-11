@@ -53,10 +53,10 @@ export default function ApikeysDetail() {
     })
 
     useEffect(() => {
-        let token = getCookie('token');
-        if (token === '' || token === undefined) {
-            window.location.href = '/login';
-        }
+        // const token = getCookie('token');
+        // if (token === '' || token === undefined) {
+        //     window.location.href = '/login';
+        // }
 
         setLoading(true);
         
@@ -100,7 +100,7 @@ export default function ApikeysDetail() {
                 setLoading(false)
                 notify(err.message)
             }
-        }, 500)
+        }, 200)
     }, [params.domain]);
 
     const handleChangeSelect = (value) => {
@@ -109,7 +109,7 @@ export default function ApikeysDetail() {
             setHeightSftp(0);
             setHeightS3(0);
         }, 100)
-        
+
         setTimeout(() => {
             if (value === 'local') {
                 setHeightFtp(0);
@@ -158,7 +158,7 @@ export default function ApikeysDetail() {
                 setLoading(false)
                 notify(error.message)
             }
-        }, 500)
+        }, 200)
     }
   return (
     <>  
@@ -195,7 +195,7 @@ export default function ApikeysDetail() {
       </Tab.List>
       <Tab.Panels className="mt-2 bg-white rounded-lg shadow-lg">
         <Tab.Panel className="p-4 text-gray-700">
-            <div className="grid xl:grid-cols-6">
+            <div className="container mx-auto">
                 <div className="xl:col-start-1 xl:col-end-5">
                     <div className="bg-white border-0 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
                         <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
@@ -238,7 +238,7 @@ export default function ApikeysDetail() {
             </div>
         </Tab.Panel>
         <Tab.Panel className="p-4 text-gray-700">
-            <div className="grid xl:grid-cols-6">
+            <div className="container mx-auto">
                 <div className="xl:col-start-1 xl:col-end-5">
                     <div className="bg-white border-0 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
                         <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
@@ -497,7 +497,7 @@ export default function ApikeysDetail() {
             </div>
         </Tab.Panel>
         <Tab.Panel className="p-4 text-gray-700">
-        <div className="grid xl:grid-cols-6">
+        <div className="container mx-auto">
                 <div className="xl:col-start-1 xl:col-end-5">
                     <div className="bg-white border-0 rounded-lg relative flex flex-col w-full outline-none focus:outline-none">
                         <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t">
@@ -506,15 +506,66 @@ export default function ApikeysDetail() {
                             </h3>
                         </div>
                         <div className="relative p-6 flex-auto">
+                            <div className="my-4 text-gray-600 text-lg leading-relaxed">
+                                <p className="mt-4">
+                                    If you want use automatic script for upload file on this API, please follow this step.
+                                </p>
+                                <p className="mt-4">
+                                    Add this script to specific location tag in your HTML file.
+                                </p>
+                                <div className="mt-4">
+                                    <pre className="bg-gray-800 text-white p-4 rounded w-full overflow-auto">
+                                    <code>
+                                        {`<div id="nearven-upload"></div>`}
+                                    </code>
+                                    </pre>
+                                </div>
+
+                                <p className="mt-4">
+                                    Add this script to your body tag.
+                                </p>
+                                <div className="mt-4">
+                                    <pre className="bg-gray-800 text-white p-4 rounded w-full overflow-auto">
+                                    <code>
+                                        {`<script src="${process.env.REACT_APP_BACKEND_URL}/data/assets/js/${api.file_key}.js"></script>`}
+                                    </code>
+                                    </pre>
+                                </div>
+                            </div>
                             <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                <span className="font-semibold">JS Script Auto Use:</span> <span className="text-gray-400">{process.env.REACT_APP_BACKEND_URL}/data/assets/js/{api.file_key}.js</span>
+                                Or you can use this endpoint to upload file directly.
                             </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                <span className="font-semibold">API Key:</span> <span className="text-gray-400">API Key</span>
-                            </p>
-                            <p className="my-4 text-gray-600 text-lg leading-relaxed">
-                                <span className="font-semibold">API Secret:</span> <span className="text-gray-400">API Key</span>
-                            </p>
+                            <div className="mt-4">
+                                <pre className="bg-gray-800 text-white p-4 rounded w-full overflow-auto">
+                                <code>
+                                    {`${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/{handle}`}
+                                </code>
+                                </pre>
+                            </div>
+                            {/* Note */}
+                            <div className="mt-4 text-gray-600 text-lg leading-relaxed w-full overflow-auto">
+                                <p className="mb-4">
+                                    Note :
+                                </p>
+                                <table className="table-auto w-full">
+                                    <thead>
+                                        <tr className="border">
+                                            <th className="px-4 py-2">Handle</th>
+                                            <th className="px-4 py-2">Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr className="border text-center">
+                                            <td className="px-4 py-2"><code>single</code></td>
+                                            <td className="px-4 py-2">Upload single file</td>
+                                        </tr>
+                                        <tr className="border text-center">
+                                            <td className="px-4 py-2"><code>multiple</code></td>
+                                            <td className="px-4 py-2">For upload multiple file</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

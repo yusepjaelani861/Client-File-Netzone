@@ -21,10 +21,10 @@ export default function Dashboard() {
   });
 
   useEffect(() => {
-    const token = getCookie("token");
-    if (token === "" || token === undefined) {
-        window.location.href = "/login";
-    }
+    // const token = getCookie("token");
+    // if (token === "" || token === undefined) {
+    //     window.location.href = "/login";
+    // }
 
     setLoading(true);
     setTimeout(() => {
@@ -33,7 +33,7 @@ export default function Dashboard() {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": `Bearer ${token}`
+                    "Authorization": `Bearer ${getCookie('token')}`
                 }
             })
               .then((res) => res.json())
@@ -57,7 +57,7 @@ export default function Dashboard() {
             setLoading(false);
             notify(err.message);
         }
-    }, 500)
+    }, 200)
   }, []);
 
   return (
@@ -83,7 +83,7 @@ export default function Dashboard() {
               percentageColor="green"
               date="Since last month"
             />
-            <StatusCard
+            {/* <StatusCard
               color="orange"
               icon="groups"
               title="Users"
@@ -92,7 +92,7 @@ export default function Dashboard() {
               percentageIcon="arrow_downward"
               percentageColor="red"
               date="Since last week"
-            />
+            /> */}
             <StatusCard
               color="purple"
               icon="storage"
@@ -113,16 +113,6 @@ export default function Dashboard() {
               percentageColor="red"
               date="Since last week"
             />
-            {/* <StatusCard
-              color="blue"
-              icon="poll"
-              title="Performance"
-              amount={data.performa + "%"}
-              percentage="12"
-              percentageIcon="arrow_upward"
-              percentageColor="green"
-              date="Since last month"
-            /> */}
           </div>
         </div>
       </div>

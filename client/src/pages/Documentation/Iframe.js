@@ -3,6 +3,7 @@ export default function Iframe() {
         <>
             <div className="w-screen h-screen">
                 <iframe 
+                    title="Iframe"
                     src="https://documenter.getpostman.com/view/19496704/2s83zcS73t"
                     className="w-full h-full"
                 />

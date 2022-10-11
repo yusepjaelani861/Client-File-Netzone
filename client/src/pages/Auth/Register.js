@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { getCookie } from "assets/utils/helper";
+import { useEffect, useState } from "react";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -41,6 +42,13 @@ export default function Register() {
         setError(err.message);
       });
   };
+
+  useEffect(() => {
+    if (getCookie('token') !== '' && getCookie('token') !== undefined) {
+        window.location.href = '/dashboard'
+    }
+  })
+
   return (
     <div className="bg-light-blue-500 h-[80vh] flex justify-center items-center">
       <div className="bg-white w-2/5 p-4 rounded">

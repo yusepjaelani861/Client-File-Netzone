@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import AdminNavbar from './AdminNavbar';
 import Icon from '@material-tailwind/react/Icon';
@@ -6,9 +6,46 @@ import H6 from '@material-tailwind/react/Heading6';
 import { getCookie } from 'assets/utils/helper';
 import { Button } from '@material-tailwind/react';
 import { removeCookie } from 'assets/utils/helper';
+import ProfileCard from './ProfileCard';
 
 export default function Sidebar() {
     const [showSidebar, setShowSidebar] = useState('-left-64');
+    const [user, setUser] = useState({
+        role_id: 1,
+        username: '',
+        name: '',
+        avatar: '',
+        role: {
+            id: 1,
+            name: 'Member'
+        }
+    })
+
+    let token = getCookie('token')
+
+    useEffect(() => {
+        if (token !== '' && token !== undefined) {
+            fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/admin/user`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getCookie('token')}`
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success === true) {
+                    setUser(data.data)
+                } else if (data.error.error_code === 0) {
+                    removeCookie('token')
+                    window.location.href = '/login'
+                } else {
+                    removeCookie('token')
+                    window.location.href = '/login'
+                }
+            })
+        }
+    }, [token])
 
     const handleLogout = () => {
         try {
@@ -54,8 +91,11 @@ export default function Sidebar() {
                     </NavLink>
                     <div className="flex flex-col">
                         <hr className="my-4 min-w-full" />
+                        {token !== '' && token !== undefined ? (
+                            <ProfileCard user={user} />
+                        ) : (<></>)}
 
-                        <ul className="flex-col min-w-full flex list-none">
+                        <ul className="flex-col min-w-full flex list-none mt-5">
                             {getCookie("token") === "" || getCookie("token") === undefined ? (
                                 <>
                                     <li className="rounded-lg mb-4">

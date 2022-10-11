@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import NavbarDocumentation from "./NavbarDocumentation";
 import H6 from "@material-tailwind/react/Heading6";
-import { Button, Icon } from "@material-tailwind/react";
+import { Button } from "@material-tailwind/react";
 
 export default function SidebarDocumentation() {
   const [showSidebar, setShowSidebar] = useState("left-0");
@@ -65,11 +65,18 @@ export default function SidebarDocumentation() {
               Uploads
             </NavLink>
             <NavLink
-              to="/docs/file"
+              to="/docs/file/api"
               className="block px-2 py-2 text-sm mb-2 font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900"
               activeClassName="bg-gray-100 text-gray-900"
             >
               File API
+            </NavLink>
+            <NavLink
+              to="/docs/file/list"
+              className="block px-2 py-2 text-sm mb-2 font-medium text-gray-700 rounded-md hover:bg-gray-100 hover:text-gray-900"
+              activeClassName="bg-gray-100 text-gray-900"
+            >
+              File List
             </NavLink>
             {/* <div className="flex justify-center w-full text-gray-900 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900 rounded-md">
                 <span className="truncate">Dashboard</span>

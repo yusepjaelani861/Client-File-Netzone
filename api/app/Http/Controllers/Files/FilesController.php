@@ -8,6 +8,7 @@ use App\Models\Files;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class FilesController extends Controller
 {
@@ -28,8 +29,42 @@ class FilesController extends Controller
         return $this->sendResponse([
             'files' => $files->items(),
             'upload' => $api->file_key
-    ], 'Berhasil mendapatkan daftar file', $this->autoPagination($files));
+        ], 'Berhasil mendapatkan daftar file', $this->autoPagination($files));
     }
+
+    public function search(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string',
+        ], [
+            'name.string' => 'Kata kunci harus berupa string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validasi gagal', $validator->errors(), 'PROCESS_ERROR', 400);
+        }
+
+        $api = ApiKey::where([
+            'user_id' => Auth::user()->id,
+            'domain' => 'Default'
+        ])->first();
+
+        $files = Files::where('user_id', Auth::user()->id)
+            ->where(function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->name . '%');
+            })
+            ->with('api')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        $files->appends($request->all());
+
+        return $this->sendResponse([
+            'files' => $files->items(),
+            'upload' => $api->file_key
+        ], 'Berhasil mendapatkan daftar file', $this->autoPagination($files));
+    }
+
 
     public function listPerAPI(Request $request)
     {

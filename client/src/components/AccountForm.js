@@ -61,7 +61,7 @@ export default function AccountForm() {
             } catch (err) {
                 throw new Error(err);
             }
-        }, 500);
+        }, 200);
     }
 
     useEffect(() => {
@@ -101,7 +101,7 @@ export default function AccountForm() {
             } catch (err) {
                 throw new Error(err);
             }
-        }, 500);
+        }, 200);
     }
 
     return (

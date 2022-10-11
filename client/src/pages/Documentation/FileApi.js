@@ -1,38 +1,53 @@
 import CardBox from "components/CardBox";
+import RightBar from "./RightBar";
 
 export default function FileApi() {
+  const rightbar = [
+    {
+        name: "API Endpoint",
+        link: "#endpoint",
+    },
+    {
+        name: "Download",
+        link: "#download",
+    },
+    {
+        name: "Store",
+        link: "#store",
+    }
+  ]
   return (
     <>
       <div className="bg-light-blue-500 px-3 md:px-8 h-18 mb-10" />
+      <div className="lg:flex">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap">
           <div className="w-full lg:w-12/12 mb-12 px-4">
             <CardBox>
-              <h1 className="text-2xl font-bold">API Endpoint</h1>
+              <h1 id="endpoint" className="text-2xl font-bold">API Endpoint</h1>
               <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                 All requests for <b>single upload</b> to the API must be made to
                 the following endpoint:
               </p>
               <pre className="bg-ice-gray-100 p-4 rounded-lg border bg-black text-white mb-5 overflow-auto w-full">
                 <code>
-                  {`${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/single`}
+                  {`/api/v1/upload/single`}
                 </code>
               </pre>
 
-              <h1 className="text-2xl font-bold">API Endpoint</h1>
               <p className="mb-4 text-lg leading-relaxed text-blueGray-700">
                 All requests for <b>multiple upload</b> to the API must be made
                 to the following endpoint:
               </p>
               <pre className="bg-ice-gray-100 p-4 rounded-lg border bg-black text-white mb-5 overflow-auto w-full">
                 <code>
-                  {`${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/multiple`}
+                  {`/api/v1/upload/multiple`}
                 </code>
               </pre>
             </CardBox>
 
             <CardBox>
-              <h1 className="text-2xl font-bold mb-4">Download</h1>
+              <h1 id="download" className="text-2xl font-bold mb-4">Download</h1>
               <div className="relative flex text-sm flex-col min-w-0 break-word text-white w-full mb-6 shadow-lg rounded py-4 px-4 border-blue-700 border-4 bg-blue-500">
                 Please use the Filestack CDN to download and/or serve files.
                 Using the API is inefficient and incurs higher bandwidth costs.
@@ -60,7 +75,7 @@ export default function FileApi() {
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                         <code>
-                          {`${process.env.REACT_APP_BACKEND_URL}/download/{handle}`}
+                          {`/download/{handle}`}
                         </code>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
@@ -116,7 +131,7 @@ export default function FileApi() {
             </CardBox>
 
             <CardBox>
-              <h1 className="text-2xl font-bold mb-4">Store</h1>
+              <h1 id="store" className="text-2xl font-bold mb-4">Store</h1>
 
               <p className="mb-4 text-sm leading-relaxed text-blueGray-700">
                 Uploads a file directly to any of our supported backends. This
@@ -150,7 +165,7 @@ export default function FileApi() {
                       </th>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
                         <code>
-                          {`${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/{handle}`}
+                          {`/api/v1/upload/{handle}`}
                         </code>
                       </td>
                       <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4">
@@ -210,6 +225,7 @@ export default function FileApi() {
 -H "Content-Type: multipart/form-data" \\
 -F "files[]=@/path/to/file" \\
 -F "files[]=@/path/to/file" \\
+-F "files[]=@/path/to/file"
 `}
                   </code>
                 </pre>
@@ -217,6 +233,7 @@ export default function FileApi() {
 
               <h1 className="text-2xl font-bold mb-4">Response</h1>
               <CardBox className="border bg-black text-white">
+                <div className="w-full overflow-auto">
                 <pre className="text-sm text-blueGray-700">
                   <code>
                     {`{
@@ -228,21 +245,21 @@ export default function FileApi() {
             "extension": "webp",
             "mime_type": "image/webp",
             "size": 67182,
-            "url": "${process.env.REACT_APP_BACKEND_URL}/download/79a0988ffe5f854"
+            "url": "/download/79a0988ffe5f854"
         },
         {
             "name": "adoc.pub_solusi-numerik-persamaan-fokker-planck-dengan-meto (1) (1) (1).pdf",
             "extension": "pdf",
             "mime_type": "application/pdf",
             "size": 1370820,
-            "url": "${process.env.REACT_APP_BACKEND_URL}/download/757792720f5e9e8"
+            "url": "/download/757792720f5e9e8"
         },
         {
             "name": "adoc.pub_solusi-numerik-persamaan-fokker-planck-dengan-meto (1) (2).pdf",
             "extension": "pdf",
             "mime_type": "application/pdf",
             "size": 1370820,
-            "url": "${process.env.REACT_APP_BACKEND_URL}/download/cf602918afb04c5"
+            "url": "/download/cf602918afb04c5"
         }
     ],
     "error": {
@@ -253,10 +270,13 @@ export default function FileApi() {
 }`}
                   </code>
                 </pre>
+                </div>
               </CardBox>
             </CardBox>
           </div>
         </div>
+      </div>
+      <RightBar data={rightbar} />
       </div>
     </>
   );

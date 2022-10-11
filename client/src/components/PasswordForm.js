@@ -17,10 +17,10 @@ export default function PasswordForm() {
     })
 
     const handleChangePassword = () => {
-        const token = getCookie('token')
-        if (token === '' || token === undefined) {
-            window.location.href = '/login'
-        }
+        // const token = getCookie('token')
+        // if (token === '' || token === undefined) {
+        //     window.location.href = '/login'
+        // }
 
         setLoading(true)
         setTimeout(() => {
@@ -40,7 +40,7 @@ export default function PasswordForm() {
                         notify(data.message)
                         setTimeout(() => {
                             window.location.reload()
-                        }, 500)
+                        }, 200)
                     } else if (data.error.error_code === 0) {
                         removeCookie('token')
                         window.location.href = '/login'

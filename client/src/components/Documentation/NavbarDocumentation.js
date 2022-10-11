@@ -1,7 +1,4 @@
-import { useLocation } from "react-router-dom";
-
 export default function NavbarDocumentation({ showSidebar, setShowSidebar }) {
-  const location = useLocation().pathname;
   return (
     <nav className="bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4">
@@ -31,12 +28,6 @@ export default function NavbarDocumentation({ showSidebar, setShowSidebar }) {
                 </svg>
               </button>
             </div>
-            <div className="flex justify-center items-center pl-24">
-                <h1>
-                {location === '/docs' ? "DOCUMENTATION" : `DOCUMENTATION - ${location.replace('/docs/', '').toUpperCase()}`}
-
-                </h1>
-              </div>
           </div>
         </div>
       </div>

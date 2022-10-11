@@ -28,6 +28,32 @@ class ApiKeyController extends Controller
         return $this->sendResponse($api->items(), 'Berhasil mendapatkan daftar API', $this->autoPagination($api));
     }
 
+    public function search(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'nullable|string',
+        ], [
+            'name.string' => 'Kata kunci harus berupa string',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->sendError('Validasi gagal', $validator->errors(), 'PROCESS_ERROR', 400);
+        }
+
+        $api = ApiKey::where('user_id', Auth::user()->id)
+            ->where(function ($query) use ($request) {
+                $query->where('domain', 'like', '%' . $request->name . '%')
+                ->orWhere('secret_key', 'like', '%' . $request->name . '%')
+                ->orWhere('file_key', 'like', '%' . $request->name . '%');
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        $api->appends($request->all());
+
+        return $this->sendResponse($api->items(), 'Berhasil mendapatkan daftar API', $this->autoPagination($api));
+    }
+
     public function get(int $id)
     {
         $api = ApiKey::where('id', $id)->with('storage')->first();

@@ -23,7 +23,7 @@ export default function Uploading() {
                                     </p>
                                     <pre className="bg-ice-gray-100 p-4 rounded-lg border bg-black text-white mb-5 overflow-auto w-full">
                                         <code>
-                                            {`curl -X POST ${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/single \\
+                                            {`curl -X POST /api/v1/upload/single \\
     -F apikey=YOUR_API_KEY \\
     -F file=@/path/to/file`}
                                         </code>
@@ -42,7 +42,7 @@ export default function Uploading() {
         "extension": "jpeg",
         "mime_type": "image/jpeg",
         "size": 1479311,
-        "url": "https://srv04.mitedrive.my.id/download/1a0a62886163d38"
+        "url": "/download/1a0a62886163d38"
     },
     "error": {
         "error_code": "",
@@ -59,7 +59,7 @@ export default function Uploading() {
                                     </p>
                                     <pre className="bg-ice-gray-100 p-4 rounded-lg border bg-black text-white mb-5 overflow-auto w-full">
                                         <code>
-                                            {`curl -X POST ${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/url \\
+                                            {`curl -X POST /api/v1/upload/url \\
     -F apikey=YOUR_API_KEY \\
     -F url=https://torrent.mitehost.my.id/CoverCorp.jpeg`}
                                         </code>
@@ -78,7 +78,7 @@ export default function Uploading() {
         "extension": "jpeg",
         "mime_type": "image/jpeg",
         "size": 2072981,
-        "url": "${process.env.REACT_APP_BACKEND_URL}/download/4d40c896eb97cc9"
+        "url": "/download/4d40c896eb97cc9"
     },
     "error": {
         "error_code": "",
@@ -95,7 +95,7 @@ export default function Uploading() {
                                     </p>
                                     <pre className="bg-ice-gray-100 p-4 rounded-lg border bg-black text-white mb-5 overflow-auto w-full">
                                         <code>
-                                            {`curl -X POST ${process.env.REACT_APP_BACKEND_URL}/api/v1/upload/multiple \\
+                                            {`curl -X POST /api/v1/upload/multiple \\
     -F apikey=YOUR_API_KEY \\
     -F file=@/path/to/file \\
     -F file=@/path/to/file`}
@@ -116,14 +116,14 @@ export default function Uploading() {
             "extension": "webp",
             "mime_type": "image/webp",
             "size": 67182,
-            "url": "${process.env.REACT_APP_BACKEND_URL}/download/79a0988ffe5f854"
+            "url": "/download/79a0988ffe5f854"
         },
         {
             "name": "adoc.pub_solusi-numerik-persamaan-fokker-planck-dengan-meto (1) (1) (1).pdf",
             "extension": "pdf",
             "mime_type": "application/pdf",
             "size": 1370820,
-            "url": "${process.env.REACT_APP_BACKEND_URL}/download/757792720f5e9e8"
+            "url": "/download/757792720f5e9e8"
         }
     ],
     "error": {

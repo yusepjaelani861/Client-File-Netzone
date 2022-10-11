@@ -1,6 +1,5 @@
 import { Button } from "@material-tailwind/react";
 import CardBox from "components/CardBox";
-import { NavLink } from "react-router-dom";
 
 export default function Overview() {
   return (

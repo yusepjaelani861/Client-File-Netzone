@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         $this->middleware('auth:api');
     }
+
     public function me()
     {
         $user = User::where('id', Auth::user()->id)->with('role', 'information')->first();

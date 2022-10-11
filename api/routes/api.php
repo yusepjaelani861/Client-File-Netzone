@@ -47,6 +47,7 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::prefix('files')->group(function () {
+        Route::get('/search', [FilesController::class, 'search']);
         Route::get('/list', [FilesController::class, 'list']);
         Route::get('/list/filter', [FilesController::class, 'filterList']);
         Route::delete('/delete/{id}', [FilesController::class, 'delete']);
@@ -55,6 +56,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('keys')->group(function () {
         Route::get('/files/list', [FilesController::class, 'listPerAPI']);
         Route::get('/list', [APIKeyController::class, 'list']);
+        Route::get('/search', [ApiKeyController::class, 'search']);
         Route::get('/get/{id}', [APIKeyController::class, 'get']);
         Route::get('/config/get/{domain}', [ApiConfigController::class, 'getConfig']);
         Route::post('/create', [APIKeyController::class, 'create']);

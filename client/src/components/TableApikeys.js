@@ -176,6 +176,39 @@ export default function TableApikeys() {
         }, 500)
     }
 
+    const handleSearch = (search) => {
+        setLoading(true)
+        setTimeout(() => {
+            try {
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/keys/search?name=${search}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${getCookie("token")}`
+                    }
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.success === true) {
+                        setData(data);
+                        setLoading(false)
+                    } else if (data.error.error_code === 0) {
+                        // remove token
+                        removeCookie("token")
+                        window.location.href = "/login"
+                    } else {
+                        notify(data.message);
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            } catch (error) {
+                throw error
+            }
+        }, 500)
+    }
+
     return (
         <>
             <div className="flex justify-end py-3">
@@ -271,6 +304,11 @@ export default function TableApikeys() {
                             type="text"
                             className="px-3 py-2 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
                             placeholder="Search"
+                            onKeyUp={(e) => {
+                                if (e.key === "Enter") {
+                                    handleSearch(e.target.value)
+                                }
+                            }}
                         />
                         <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
                             <Icon name="search" size="2xl" />

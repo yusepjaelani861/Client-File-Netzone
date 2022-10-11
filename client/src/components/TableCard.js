@@ -7,6 +7,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import { getCookie } from 'assets/utils/helper';
 import { removeCookie } from 'assets/utils/helper';
 import LoadingScreen from './LoadingScreen';
+import { notify } from 'assets/utils/helper';
 
 export default function CardTable({page}) {
     const [data, setData] = useState([])
@@ -27,10 +28,10 @@ export default function CardTable({page}) {
     // });
 
     useEffect(() => {
-        const token = getCookie('token')
-        if (token === "" || token === undefined) {
-            window.location.href = "/login";
-        }
+        // const token = getCookie('token')
+        // if (token === "" || token === undefined) {
+        //     window.location.href = "/login";
+        // }
         setTimeout(() => {
             try {
                 fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/files/list${page}`, {
@@ -59,7 +60,7 @@ export default function CardTable({page}) {
             } catch (error) {
                 throw error
             }
-        }, 500)
+        }, 200)
     }, [page])
 
     const handlePagination = (page) => {
@@ -90,7 +91,7 @@ export default function CardTable({page}) {
             } catch (error) {
                 throw error
             }
-        }, 500)
+        }, 200)
     }
 
     const openModal = () => {
@@ -124,7 +125,39 @@ export default function CardTable({page}) {
             } catch (err) {
                 throw err
             }
-        }, 500)
+        }, 200)
+    }
+
+    const handleSearch = (search) => {
+        setLoading(true)
+        setTimeout(() => {
+            try {
+                fetch(`${process.env.REACT_APP_BACKEND_URL}/api/v1/files/search?name=${search}`, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${getCookie("token")}`
+                    }
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.success === true) {
+                        setData(data);
+                        setLoading(false)
+                    } else if (data.error.error_code === 0) {
+                        removeCookie("token")
+                        window.location.href = "/login"
+                    } else {
+                        notify(data.message)
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+            } catch (error) {
+                throw error
+            }
+        }, 200)
     }
 
     return (
@@ -197,6 +230,11 @@ export default function CardTable({page}) {
                         type="text"
                         className="px-3 py-2 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
                         placeholder="Search"
+                        onKeyUp={(e) => {
+                            if (e.key === "Enter") {
+                                handleSearch(e.target.value)
+                            }
+                        }}
                     />
                     <button type="submit" className="absolute right-0 top-0 mt-3 mr-4">
                         <Icon name="search" size="2xl" />
