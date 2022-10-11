@@ -67,6 +67,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'home']);
 
         Route::prefix('user')->group(function () {
+            Route::get('/', [DashboardController::class, 'sidebar']);
             Route::get('/me', [UserController::class, 'me']);
             Route::post('/change-password', [UserController::class, 'changePassword']);
             Route::post('/avatar', [UserController::class, 'changeAvatar']);

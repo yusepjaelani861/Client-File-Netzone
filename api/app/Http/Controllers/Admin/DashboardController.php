@@ -49,4 +49,14 @@ class DashboardController extends Controller
 
         return $this->sendResponse($files->items(), 'Success getting data.', $this->autoPagination($files));
     }
+
+    public function sidebar()
+    {
+        $user = User::where('id', Auth::user()->id)->select('id', 'name', 'username', 'avatar', 'role_id')->with('role')->first();
+        if (!$user) {
+            return $this->sendError('User tidak ditemukan', new \stdClass, 'PROCESS_ERROR', 400);
+        }
+
+        return $this->sendResponse($user, 'Success getting data', []);
+    }
 }

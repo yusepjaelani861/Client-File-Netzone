@@ -50,9 +50,9 @@ class UploadController extends Controller
         $max_storage = $config->max_storage; 
         $total_usage = $config->total_storage_used;
         if ($max_storage != '0') {
-            if ($total_usage + $size > $max_storage) {
-                return $this->sendError('Penyimpanan hampir penuh', 'Ukuran file melebihi batas maksimal', 'PROCESS_ERROR', 400);
-            }
+            // if ($total_usage + $size > $max_storage) {
+            //     return $this->sendError('Penyimpanan hampir penuh', 'Ukuran file melebihi batas maksimal', 'PROCESS_ERROR', 400);
+            // }
         }
 
         $enc = sha1($file->getClientOriginalName() . Str::random(60));

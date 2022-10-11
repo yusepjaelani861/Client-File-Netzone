@@ -24,7 +24,7 @@ class ImageController extends Controller
 
         $file = public_path('images/' . $name);
 
-        return response()->file($file);
+        return redirect()->to(url('/') . '/images/' . $name . '.webp');
     }
 
     public function imageWidth($width, $name)
@@ -47,6 +47,6 @@ class ImageController extends Controller
 
         $file = public_path('images/' . $width . '/' . $name . '.webp');
 
-        return response()->file($file);
+        return redirect()->to(url('/') . 'images/' . $width . '/' . $name . 'webp');
     }
 }
