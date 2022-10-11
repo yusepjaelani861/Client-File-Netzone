@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Jobs\ErrorHandler;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
@@ -46,6 +47,7 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
+            $this->sendTelegramError($e);
             // if ($this->app->environment('local')) {
             //     $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             //     $this->app->register(TelescopeServiceProvider::class);
@@ -124,5 +126,29 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $e);
+    }
+
+    public function sendTelegramError($e) {
+        $host = getEnv('APP_URL');
+        $app_name = getEnv('APP_NAME');
+        $enviroment = getEnv('APP_ENV');
+        $now = now();
+
+        $data = [
+            'chatId' => '-1001847863693',
+            'body' => "
+Netzone Media Ticket
+*Error {$app_name} Backend*
+===========================
+host: {$host}
+enviroment: {$enviroment} 
+message: {$e->getMessage()} 
+line : {$e->getLine()}
+file : {$e->getFile()}
+code : {$e->getCode()}
+time : {$now}
+            ",
+        ];
+        dispatch(new ErrorHandler($data));
     }
 }

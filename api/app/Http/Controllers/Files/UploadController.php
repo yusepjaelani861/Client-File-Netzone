@@ -90,7 +90,7 @@ class UploadController extends Controller
                 break;
         }
 
-        $path = $api->user->username . '/' . $api->name . '/' . $enc;
+        $path = $api->user->username . '/' . $api->domain . '/' . $enc;
         $filesystem->put($path, file_get_contents($file));
 
         $shorturl = substr(md5($enc . Str::random(60) . $file->getClientOriginalExtension()), 0, 15);
@@ -199,7 +199,7 @@ class UploadController extends Controller
                     break;
             }
 
-            $path = $api->user->username . '/' . $api->name . '/' . $enc;
+            $path = $api->user->username . '/' . $api->domain . '/' . $enc;
             $filesystem->put($path, file_get_contents($file));
 
             $shorturl = substr(md5($enc . Str::random(60) . $file->getClientOriginalExtension()), 0, 15);
@@ -321,7 +321,7 @@ class UploadController extends Controller
                 break;
         }
 
-        $path = $api->user->username . '/' . $api->name . '/' . $enc;
+        $path = $api->user->username . '/' . $api->domain . '/' . $enc;
         $filesystem->put($path, $file);
 
         $shorturl = substr(md5($enc . Str::random(60) . pathinfo($url, PATHINFO_EXTENSION)), 0, 15);
